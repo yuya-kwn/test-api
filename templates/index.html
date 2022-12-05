@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="jp">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,8 +7,9 @@
     <title>Items</title>
 </head>
 <body>
+  <section>
     <h2>Items</h2>
-    <form action="/items" method="post">
+    <form class="fetchForm">
         <table>
             <tr>
                 <td>アイテム名</td>
@@ -19,7 +20,37 @@
                 <td><input type="text" name="price"></td>
             </tr>
         </table>
-        <input type="submit" value="送信">
+        <input type="button" value="送信" class="btn">
     </form>
+  </section>
+  <script>
+    const fetchForm = document.querySelector('.fetchForm');
+    const btn = document.querySelector('.btn');
+    const url = 'http://localhost:8080/items';
+
+    const postFetch = () => {
+      let formData = new FormData(fetchForm);
+      for (let value of formData.entries()) {
+          console.log(value);
+      }
+
+      fetch(url,{
+          method: 'POST',
+          body: formData
+        }).then((response) => {
+            if(!response.ok) {
+                console.log('error!');
+            }
+            console.log('ok!');
+            return response.json();
+        }).then((data) => {
+            console.log(data);
+        }).catch((error) => {
+            console.log(error);
+        });
+    };
+
+    btn.addEventListener('click', postFetch, false);
+  </script>
 </body>
 </html>

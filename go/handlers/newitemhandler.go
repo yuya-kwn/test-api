@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"gin-test/go/models"
@@ -22,9 +21,6 @@ func init() {
 func NewItemHandler(c *gin.Context) {
 	fmt.Println(c.Params)
 	var json models.Items
-	buf := new(bytes.Buffer)
-    buf.ReadFrom(c.Request.Body)
-    fmt.Println(buf.String())
 	if err := c.ShouldBindJSON(&json); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

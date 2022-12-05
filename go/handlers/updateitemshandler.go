@@ -8,7 +8,7 @@ import (
 )
 
 func UpdateItemHandler(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("name")
 	var item models.Items
 
 	if err := c.ShouldBindJSON(&item); err != nil {
@@ -18,7 +18,7 @@ func UpdateItemHandler(c *gin.Context) {
 	}
 	targetItemIndex := -1
 	for i := 0; i < len(items); i++ {
-		if items[i].ID == id {
+		if items[i].Name == id {
 			targetItemIndex = i
 		}
 	}

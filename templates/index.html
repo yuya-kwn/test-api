@@ -24,33 +24,33 @@
     </form>
   </section>
   <script>
-    const fetchForm = document.querySelector('.fetchForm');
-    const btn = document.querySelector('.btn');
-    const url = 'http://localhost:8080/items';
+  const fetchForm = document.querySelector('.fetchForm');
+  const btn = document.querySelector('.btn');
+  const url = 'http://localhost:8080/items';
 
-    const postFetch = () => {
-      let formData = new FormData(fetchForm);
-      for (let value of formData.entries()) {
-          console.log(value);
+  const postFetch = () => {
+    let formData = new FormData(fetchForm);
+    for (let value of formData.entries()) {
+      console.log(value);
+    }
+    
+    fetch(url,{
+      method: 'POST',
+      body: JSON.stringify(formData)
+    }).then((response) => {
+      if(!response.ok) {
+        console.log('error!');
       }
-
-      fetch(url,{
-          method: 'POST',
-          body: formData
-        }).then((response) => {
-            if(!response.ok) {
-                console.log('error!');
-            }
-            console.log('ok!');
-            return response.json();
-        }).then((data) => {
-            console.log(data);
-        }).catch((error) => {
-            console.log(error);
-        });
-    };
-
-    btn.addEventListener('click', postFetch, false);
+      console.log('ok!');
+      return response.json();
+    }).then((data) => {
+      console.log(data);
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+  
+  btn.addEventListener('click', postFetch, false);
   </script>
 </body>
 </html>

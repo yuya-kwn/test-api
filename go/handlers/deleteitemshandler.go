@@ -7,11 +7,11 @@ import (
 )
 
 func DeleteItemHandler(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param("name")
 
 	itemIndex := -1
 	for i := 0; i < len(items); i++ {
-		if items[i].ID == id {
+		if items[i].Name == id {
 			itemIndex = i
 		}
 	}

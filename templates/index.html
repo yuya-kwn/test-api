@@ -9,51 +9,46 @@
 <body>
   <section>
     <h2>Items</h2>
-    <form class="fetchForm">
+    <form id="my-form">
         <table>
             <tr>
                 <td>アイテム名</td>
-                <td><input type="text" name="name"></td>
+                <td><input type="text" name="name"/></td>
             </tr>
             <tr>
                 <td>値段</td>
-                <td><input type="number" name="price"></td>
+                <td><input type="number" name="price"/></td>
             </tr>
         </table>
-        <input type="button" value="送信" class="btn">
+        <button type="submit">Submit</button>
     </form>
   </section>
   <script>
-    const fetchForm = document.querySelector('.fetchForm');
-    const btn = document.querySelector('.btn');
-    const url = 'http://localhost:8080/items';
+    const form = document.getElementById("my-form");
+    form.addEventListener("submit",submitFormData);
 
-    const postFetch = () => {
-      let formData = new FormData(fetchForm);
-      for (let value of formData.entries()){
-        console.log(value);
-      }
+    function submitFormData(e){
+      console.log("ここまで");
+      e.preventDefault();
 
-      fetch(url,{
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
+      var str1 = document.querySelector('input[name="price"]').value;
+      var num1 = Number(str1);
+
+      const data = {
+        name: document.querySelector('input[name="name"]').value,
+        price: num1,
+      };
+
+      fetch("http://localhost:8080/items",{
+        method:"POST",
+        body: JSON.stringify(data),
+        headers: {
+          Accept:"application/json",
         },
-        body: JSON.stringify(formData)
-      }).then((response) => {
-        if(!response.ok){
-          console.log('error!')
-        };
-        console.log('ok!');
-        return response.json();
-      }).then((data) => {
-        console.log(data);
-      }).catch((error) => {
-        console.log(error);
-      });
+      })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
     };
-
-    btn.addEventListener('click', postFetch, false);
   </script>
 </body>
 </html>
